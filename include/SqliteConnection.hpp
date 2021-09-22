@@ -1,7 +1,19 @@
 #include "UniqueHandle.hpp"
 #include <sqlite3.h>
+#include <string>
 
 namespace Sqlite {
+	
+struct exception
+{
+	const int errorCode_;
+	const std::string errorMessage_;
+
+	exception(sqlite3 *connection) : errorCode_{sqlite3_extended_errcode(connection)}, errorMessage_{sqlite3_errmsg(connection)}
+	{
+	}
+};
+	
 
 class SqliteConnection {
 	
@@ -44,6 +56,8 @@ class SqliteConnection {
 	void open(const char *const filename);
 
 	void open(const wchar_t *const filename);
+	
+	long long lastRowId() const noexcept;
 };
 
 }
