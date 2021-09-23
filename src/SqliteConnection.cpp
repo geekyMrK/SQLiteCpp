@@ -9,7 +9,7 @@ void Sqlite::SqliteConnection::internalOpen(Function openFunction, const Charact
 		tempConnection.throwLastError();
 	}
 	
-	swap(connectionHandle_, tempConnection.connectionHandle_);
+	connectionHandle_.swap(tempConnection.connectionHandle_);
 }
 
 void Sqlite::SqliteConnection::throwLastError() const {
@@ -23,3 +23,8 @@ void Sqlite::SqliteConnection::open(const char *const filename) {
 void Sqlite::SqliteConnection::open(const wchar_t *const filename) {
 	internalOpen(sqlite3_open16, filename);
 }
+
+long long Sqlite::SqliteConnection::lastRowId() const noexcept {
+        return sqlite3_last_insert_rowid(getABI());
+}	
+
