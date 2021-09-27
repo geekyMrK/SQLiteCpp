@@ -33,14 +33,21 @@ namespace Sqlite{
 	UniqueHandle<SqliteStatementTraits> statementHandle_;
 
 	template <typename PrepareFunction, typename CharacterSet, typename... VALUES>
-	void internalPrepare(const SqliteConnection &connection, const PrepareFunction prepare, const CharacterSet *const text, VALUES &&... values) ;
-	
+	void internalPrepare(const SqliteConnection &connection, const PrepareFunction prepare, const CharacterSet *const text, VALUES &&... values) {
+		if (SQLITE_OK != prepare(connection.getABI(), text, -1, statementHandle_.set(), nullptr)) {
+			connection.throwLastError();
+		}
+		bindAll(std::forward<VALUES>(values)...);
+	}
+	  
 	void internalBindAll(const int) const noexcept{
 	}
 	
 	template <typename FIRST, typename... REST_VALUES>
-	void internalBindAll(const int index, FIRST &&first, REST_VALUES &&... restValues) const ;
-
+	void internalBindAll(const int index, FIRST &&first, REST_VALUES &&... restValues) const {
+		bind(index, std::forward<FIRST>(first));
+		internalBindAll(index + 1, std::forward<REST_VALUES>(restValues)...);
+	}
   public:
 	SqliteStatement() = default;
 	  
@@ -59,9 +66,16 @@ namespace Sqlite{
 
 	void throwLastError() const;
 
-	void prepare(const SqliteConnection &connection, const char *const characterSet);
-	void prepare(const SqliteConnection &connection, const wchar_t *const characterSet) ;
-
+	template <typename... VALUES>
+	void prepare(const SqliteConnection &connection, const char *const characterSet, VALUES &&... values){
+		internalPrepare(connection, sqlite3_prepare_v2, characterSet, std::forward<VALUES>(values)...);
+	}
+		
+	template <typename... VALUES>
+	void prepare(const SqliteConnection &connection, const wchar_t *const characterSet, VALUES &&... values) {
+		internalPrepare(connection, sqlite3_prepare16_v2, characterSet, std::forward<VALUES>(values)...);
+	}
+	  
 	bool execute() const ;  
 	  
 	void bind(const int index, const int value) const ;
@@ -79,16 +93,22 @@ namespace Sqlite{
 	void bind(const int index, const std::wstring &&strValue) const ;
 
 	template <typename... Values>
-	void bindAll(Values &&... values) const ;
-	
+	void bindAll(Values &&... values) const {
+		internalBindAll(1, std::forward<Values>(values)...);
+	}
+	  
 	template <typename ...Values>
-	void reset (Values&&... values) ;
+	void bindAll(Values &&... values) const {
+		internalBindAll(1, std::forward<Values>(values)...);
+	}
 	  
 
   };
 	
   template <typename CharacterSet, typename... Values>
-  void sqliteExecute(const SqliteConnection &connection, const CharacterSet *const text, Values &&... values) ;
+  void sqliteExecute(const SqliteConnection &connection, const CharacterSet *const text, Values &&... values) {
+	SqliteStatement(connection, text, std::forward<Values>(values)...).execute();
+  }
 
 
 }
