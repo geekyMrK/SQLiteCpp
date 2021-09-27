@@ -17,13 +17,6 @@ void Sqlite::SqliteStatement::throwLastError() const {
 	throw exception(sqlite3_db_handle(getABI()));
 }
 
-template <typename... Values>
-void Sqlite::SqliteStatement::reset(Values &&... values) {
-	if (SQLITE_OK != sqlite3_reset(getABI())) {
-		throwLastError();
-	}
-}
-
 
 bool Sqlite::SqliteStatement::execute() const {
 	const int result = sqlite3_step(getABI());
