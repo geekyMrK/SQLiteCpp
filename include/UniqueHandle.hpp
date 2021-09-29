@@ -54,5 +54,18 @@ class UniqueHandle
 
 	[[maybe_unused]] bool reset(Type typeValue = Traits::invalid()) noexcept;
 
-	void swap(UniqueHandle<Traits> &other) noexcept;
+	void swap(UniqueHandle<Traits> &other) noexcept {
+		Type temp = TypeValue_;
+		TypeValue_ = other.TypeValue_;
+		other.TypeValue_ = temp;
+	}
 };
+	
+	
+template <typename Traits>
+void swap(UniqueHandle<Traits> &left, UniqueHandle<Traits> &right) noexcept {
+	left.swap(right);
+}
+
+
+}
