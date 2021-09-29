@@ -9,7 +9,7 @@ void Sqlite::SqliteConnection::internalOpen(Function openFunction, const Charact
 		tempConnection.throwLastError();
 	}
 	
-	connectionHandle_.swap(tempConnection.connectionHandle_);
+	swap(connectionHandle_, tempConnection.connectionHandle_);
 }
 
 void Sqlite::SqliteConnection::throwLastError() const {
