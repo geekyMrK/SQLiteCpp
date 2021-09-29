@@ -17,9 +17,3 @@ template <typename Traits>
 	return static_cast<bool>(*this);
 }
 
-template <typename Traits>
-void Sqlite::UniqueHandle<Traits>::swap(UniqueHandle &other) noexcept {
-	Type temp = TypeValue_;
-	TypeValue_ = other.TypeValue_;
-	other.TypeValue_ = temp;
-}
