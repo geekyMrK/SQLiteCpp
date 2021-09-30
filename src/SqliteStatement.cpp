@@ -1,12 +1,12 @@
 #include "SqliteStatement.hpp"
 
 template <typename T>
-int Sqlite::sqliteReader<T>::getStringLength(const int columnNum) const noexcept {
+constexpr int Sqlite::sqliteReader<T>::getStringLength(const int columnNum) const noexcept {
         return sqlite3_column_bytes(static_cast<const T *>(this)->getABI(), columnNum);
 }
 	
 template <typename T>
-int Sqlite::sqliteReader<T>::getWideStringLength(const int columnNum) const noexcept
+constexpr int Sqlite::sqliteReader<T>::getWideStringLength(const int columnNum) const noexcept
 {
 	return (sqlite3_column_bytes16(static_cast<const T *>(this)->getABI(), columnNum) / sizeof(wchar_t));
 }
