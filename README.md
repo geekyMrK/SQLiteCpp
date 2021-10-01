@@ -1,10 +1,13 @@
 > ### Usage
 > #### you can use the library in form of single header file in `header_only_src` directory. The files in `include` and`src` are exactly same but in the form of .hpp/.cpp files, which you need to compile and link with.
 
-# SQLiteCpp
+[![GitHub license](https://img.shields.io/github/license/geekyMrK/SQLiteCpp)](https://github.com/geekyMrK/SQLiteCpp/blob/main/LICENSE)
+[![Made With Love](https://img.shields.io/badge/Made%20With-Love-orange.svg)](https://github.com/geekyMrK/SQLiteCpp)
+
+# SQLiteCpp [![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/index.html)[![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)](https://isocpp.org)
 A simple and efficient wrapper for SQLite3 for C++11 
 
-## The Goals of SqliteCpp are:
+## The Goals of SQLiteCpp are:
 - to be a Simple and Efficient wrapper over SQLite3 
 - to keep deficiencies to a minimum (SQLite3 and C++11 STL)
 - to design a good Wrapper using Modern C++
@@ -90,11 +93,11 @@ C        :      6
 MySQL    :      6
 ```
 
-## Contributing
+## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/geekyMrK/SQLiteCpp)
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 Please make sure to update tests as appropriate
 .
-## License
+## License [![GitHub license](https://img.shields.io/github/license/geekyMrK/SQLiteCpp)](https://github.com/geekyMrK/SQLiteCpp/blob/main/LICENSE)
 Distributed under the [MIT License](https://choosealicense.com/licenses/mit/)
 
 #### Note on redistribution of SQLite source files
