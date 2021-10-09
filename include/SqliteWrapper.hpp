@@ -22,13 +22,13 @@ class rowIterator {
 
   public:
 	rowIterator() noexcept = default;
-	rowIterator(const SqliteStatement &statement) noexcept {
+	rowIterator(const SqliteStatement &statement) {
 		if (statement.execute()) {
 			statement_ = &statement;
 		}
 	}
 	
-	rowIterator &operator++() noexcept ;
+	rowIterator &operator++() ;
 
 	constexpr bool operator!=(const rowIterator &other) const noexcept {
 		return statement_ != other.statement_;
