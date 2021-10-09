@@ -1,6 +1,6 @@
 #include "SQLiteWrapper.hpp"
 	
-Sqlite::rowIterator& Sqlite::rowIterator::operator++() noexcept {
+Sqlite::rowIterator& Sqlite::rowIterator::operator++() {
 	if (!statement_->execute()) {
 		statement_ = nullptr;
 	}
