@@ -357,13 +357,13 @@ class rowIterator {
   
 	rowIterator() noexcept = default;
 	
-	rowIterator(const SqliteStatement &statement) noexcept {
+	rowIterator(const SqliteStatement &statement) {
 		if (statement.execute()) {
 			statement_ = &statement;
 		}
 	}
 	
-	rowIterator &operator++() noexcept {
+	rowIterator &operator++() {
 		if (!statement_->execute()) {
 			statement_ = nullptr;
 		}
